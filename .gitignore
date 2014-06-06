@@ -1,3 +1,6 @@
-gen/
-bin/
-local.properties
+/gen/
+/bin/
+/local.properties
+/*.sh
+/keystore
+/ant.properties
