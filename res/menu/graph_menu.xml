@@ -3,9 +3,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/refreshMenu"
            android:icon="@drawable/ic_menu_refresh"
-           android:title="Refresh" />
+           android:title="Refresh"
+           android:showAsAction="ifRoom" />
 
     <item android:id="@+id/switchTimeframe"
-          android:title="" />
+          android:title=""
+          android:showAsAction="ifRoom" />
 
 </menu>

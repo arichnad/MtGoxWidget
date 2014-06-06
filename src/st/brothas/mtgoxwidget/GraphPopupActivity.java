@@ -240,6 +240,7 @@ public class GraphPopupActivity extends Activity {
                     graphTimeframe = GraphTimeframe.OneDay;
                 }
 
+                invalidateOptionsMenu();
                 showGraphPopup();
                 onResume();
                 return true;
