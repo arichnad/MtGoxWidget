@@ -32,9 +32,7 @@ public enum RateService {
 	BTER(7, "BTER",
 			new TickerUrl(BTC_CNY, "https://bter.com/api/1/ticker/btc_cny"),
 			new TickerUrl(LTC_CNY, "https://bter.com/api/1/ticker/ltc_cny"),
-			new TickerUrl(LTC_BTC, "https://bter.com/api/1/ticker/ltc_btc"),
-			new TickerUrl(QRK_BTC, "https://bter.com/api/1/ticker/qrk_btc"),
-			new TickerUrl(QRK_CNY, "https://bter.com/api/1/ticker/qrk_cny")),
+			new TickerUrl(LTC_BTC, "https://bter.com/api/1/ticker/ltc_btc")),
 
 	BITKONAN(8, "BKonan", new TickerUrl(BTC_USD, "https://bitkonan.com/api/ticker/")),
 

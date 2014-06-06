@@ -4,9 +4,6 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.openbitcoinwidget.CurrencyConversion.VirtualCurrency.LITECOIN;
-import static org.openbitcoinwidget.CurrencyConversion.VirtualCurrency.QUARK;
-
 public enum CurrencyConversion {
 
 	// Bitcoin
@@ -23,32 +20,28 @@ public enum CurrencyConversion {
 	BTC_ILS(11,"BTC/ILS", "₪"),
 
 	// Litecoin
-	LTC_BTC(106, "LTC/BTC", "฿", LITECOIN),
-	LTC_USD(107, "LTC/USD", "$", LITECOIN),
-	LTC_EUR(108, "LTC/EUR", "€", LITECOIN),
-	LTC_CNY(109, "LTC/CNY", "¥", LITECOIN),
+	LTC_BTC(106, "LTC/BTC", "฿", DigitalCurrency.LITECOIN),
+	LTC_USD(107, "LTC/USD", "$", DigitalCurrency.LITECOIN),
+	LTC_EUR(108, "LTC/EUR", "€", DigitalCurrency.LITECOIN),
+	LTC_CNY(109, "LTC/CNY", "¥", DigitalCurrency.LITECOIN);
 
-	// Quark
-	QRK_BTC(206, "QRK/BTC", "฿", QUARK),
-	QRK_CNY(207, "QRK/CNY", "¥", QUARK);
-
-	public enum VirtualCurrency {BITCOIN, LITECOIN, QUARK}
+	public static enum DigitalCurrency {BITCOIN, LITECOIN};
 
 	public final Integer id;
 	public final String description;
 	public final String symbol;
-	public final VirtualCurrency virtualCurrency;
+	public final DigitalCurrency digitalCurrency;
 	private static final Map<Integer,CurrencyConversion> lookup = new HashMap<Integer,CurrencyConversion>();
 
 	CurrencyConversion(int id, String description, String symbol) {
-		this(id, description, symbol, VirtualCurrency.BITCOIN); // Default Bitcoin
+		this(id, description, symbol, DigitalCurrency.BITCOIN); // Default Bitcoin
 	}
 
-	CurrencyConversion(int id, String description, String symbol, VirtualCurrency virtualCurrency) {
+	CurrencyConversion(int id, String description, String symbol, DigitalCurrency digitalCurrency) {
 		this.id = id;
 		this.description = description;
 		this.symbol = symbol;
-		this.virtualCurrency = virtualCurrency;
+		this.digitalCurrency = digitalCurrency;
 	}
 
 	static {

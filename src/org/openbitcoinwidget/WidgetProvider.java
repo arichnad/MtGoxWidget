@@ -43,7 +43,7 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static org.openbitcoinwidget.CurrencyConversion.VirtualCurrency.LITECOIN;
+import static org.openbitcoinwidget.CurrencyConversion.DigitalCurrency.LITECOIN;
 
 /**
  *
@@ -157,11 +157,8 @@ public class WidgetProvider extends AppWidgetProvider {
 		views.setTextViewText(R.id.appwidget_updated, updated);
 
 		// Set Litecoin logo if that is the chosen currency.
-		switch (preferences.getCurrencyConversion().virtualCurrency) {
+		switch (preferences.getCurrencyConversion().digitalCurrency) {
 			case LITECOIN:
-				views.setImageViewResource(R.id.appwidget_logo, R.drawable.logo);
-				break;
-			case QUARK:
 				views.setImageViewResource(R.id.appwidget_logo, R.drawable.logo);
 				break;
 			// The Bitcoin logo is default in the layout.
