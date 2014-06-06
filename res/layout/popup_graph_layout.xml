@@ -12,7 +12,6 @@
 			android:layout_height="wrap_content"
 			android:gravity="center_horizontal"
 			android:textSize="12sp"
-			android:text="(Press 'menu' button for more actions)"
 			android:id="@+id/SettingsHelp"/>
 
 	<LinearLayout android:id="@+id/chart"
