@@ -19,6 +19,14 @@
 			android:key="currencyConversionPref"/>
 
 		<ListPreference
+			android:title="Currency unit"
+			android:summary="The currency unit to show"
+			android:key="currencyUnitPref"
+			android:entries="@array/currencyUnitList"
+			android:entryValues="@array/currencyUnitValues"
+			android:defaultValue="MBTC" />
+
+		<ListPreference
 			android:title="Color mode"
 			android:summary="The color mode for the text and numbers in the widget"
 			android:key="colorModePref"

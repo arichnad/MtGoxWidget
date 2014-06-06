@@ -5,6 +5,7 @@ public class WidgetPreferences {
 	private RateService rateService = RateService.getDefaultService();
 	private ColorMode colorMode = ColorMode.Default;
 	private CurrencyConversion currencyConversion = CurrencyConversion.getDefault();
+	private CurrencyUnit currencyUnit = CurrencyUnit.getDefault();
 
 	public ColorMode getColorMode() {
 		return colorMode;
@@ -22,6 +23,14 @@ public class WidgetPreferences {
 		this.currencyConversion = currencyConversion;
 	}
 
+	public CurrencyUnit getCurrencyUnit() {
+		return currencyUnit;
+	}
+
+	public void setCurrencyUnit(CurrencyUnit currencyUnit) {
+		this.currencyUnit = currencyUnit;
+	}
+
 	public RateService getRateService() {
 		return rateService;
 	}
@@ -36,6 +45,7 @@ public class WidgetPreferences {
 				"colorMode=" + colorMode +
 				", rateService=" + rateService +
 				", currencyConversion=" + currencyConversion +
+				", currencyUnit=" + currencyUnit +
 				'}';
 	}
 }

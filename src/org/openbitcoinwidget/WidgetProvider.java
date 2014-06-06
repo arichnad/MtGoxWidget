@@ -134,9 +134,9 @@ public class WidgetProvider extends AppWidgetProvider {
 	private static void updateViews(RemoteViews views, TickerData prevData, TickerData newData,
 									WidgetPreferences preferences) {
 		String updated = "@ " + dateFormat.format(newData.getTimestamp());
-		String lastRounded = round(newData.getLast());
-		String lowRounded = round(newData.getLow());
-		String highRounded = round(newData.getHigh());
+		String lastRounded = round(newData.getLast(), preferences);
+		String lowRounded = round(newData.getLow(), preferences);
+		String highRounded = round(newData.getHigh(), preferences);
 
 		views.setTextViewText(R.id.appwidget_last, preferences.getCurrencyConversion().symbol + lastRounded);
 		views.setTextColor(R.id.appwidget_updated, getColor(preferences.getColorMode(), WidgetColor.Normal));
@@ -215,18 +215,27 @@ public class WidgetProvider extends AppWidgetProvider {
 		return new Date(System.currentTimeMillis() - (minutes*60*1000));
 	}
 
-	private static String round(Double value) {
+	private static String round(Double value, WidgetPreferences preferences) {
 		if (value == null) {
 			return "N/A";
 		}
+		value *= preferences.getCurrencyUnit().scale;
 
-		int decimals = 2;
-		if (value >= 1000) {
+		int decimals;
+		if (value >= 10) {
 			decimals = 0;
-		} else if (value >= 100) {
+		}
+		else if (value >= 1) {
 			decimals = 1;
-		} else if (value < 10) {
+		}
+		else if (value >= .1) {
+			decimals = 2;
+		}
+		else if (value >= .01) {
 			decimals = 3;
+		}
+		else {
+			decimals = 4;
 		}
 
 		return BigDecimal.valueOf(value).setScale(decimals, BigDecimal.ROUND_HALF_UP).toString();

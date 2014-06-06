@@ -25,6 +25,18 @@
 		<item>BIT2C</item>
 	</string-array>
 
+	<string-array name="currencyUnitList">
+		<item>BTC (bitcoin)</item>
+		<item>mBTC</item>
+		<item>Bit</item>
+	</string-array>
+
+	<string-array name="currencyUnitValues">
+		<item>BTC</item>
+		<item>MBTC</item>
+		<item>BIT</item>
+	</string-array>
+
 	<string-array name="colorModeList">
 		<item>Default</item>
 		<item>Grayscale</item>

@@ -21,6 +21,7 @@ public class PreferencesActivity extends PreferenceActivity {
 	private static final String SERVICE_KEY = "service";
 	private static final String COLOR_MODE_KEY = "colorMode";
 	private static final String CURRENCY_CONVERSION_KEY = "currencyConversion";
+	private static final String CURRENCY_UNIT_KEY = "currencyUnit";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		final Preference servicePref = findPreference("servicePref");
 		// Get the currency conversion ListPreference from the GUI
 		final Preference currencyConversionPref = findPreference("currencyConversionPref");
+		final Preference currencyUnitPref = findPreference("currencyUnitPref");
 
 		//updatePreferenceSummary(servicePref, selectedRateService.getName());
 		updateCurrencyChoices(widgetPreferences.getRateService());
@@ -55,6 +57,14 @@ public class PreferencesActivity extends PreferenceActivity {
 				widgetPreferences.setCurrencyConversion(CurrencyConversion.valueOf((String) newValue));
 				updatePreferenceSummary(currencyConversionPref, widgetPreferences.getCurrencyConversion().description);
 
+				return true;
+			}
+		});
+
+		currencyUnitPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				widgetPreferences.setCurrencyUnit(CurrencyUnit.valueOf((String) newValue));
+				updatePreferenceSummary(currencyUnitPref, widgetPreferences.getCurrencyUnit().description);
 				return true;
 			}
 		});
@@ -142,6 +152,7 @@ public class PreferencesActivity extends PreferenceActivity {
 		editor.putString(SERVICE_KEY, widgetPreferences.getRateService().name());
 		editor.putString(COLOR_MODE_KEY, widgetPreferences.getColorMode().name());
 		editor.putString(CURRENCY_CONVERSION_KEY, widgetPreferences.getCurrencyConversion().name());
+		editor.putString(CURRENCY_UNIT_KEY, widgetPreferences.getCurrencyUnit().name());
 		editor.commit();
 	}
 
@@ -168,6 +179,8 @@ public class PreferencesActivity extends PreferenceActivity {
 		widgetPreferences.setRateService(RateService.valueOf(serviceName));
 		String currencyConversionName = sharedPreferences.getString(CURRENCY_CONVERSION_KEY, CurrencyConversion.getDefault().name());
 		widgetPreferences.setCurrencyConversion(CurrencyConversion.valueOf(currencyConversionName));
+		String currencyUnitName = sharedPreferences.getString(CURRENCY_UNIT_KEY, CurrencyUnit.getDefault().name());
+		widgetPreferences.setCurrencyUnit(CurrencyUnit.valueOf(currencyUnitName));
 
 		return widgetPreferences;
 	}

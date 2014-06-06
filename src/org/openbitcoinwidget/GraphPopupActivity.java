@@ -82,7 +82,7 @@ public class GraphPopupActivity extends Activity {
 		List<TickerData> tickerData = db.getTickerData(System.currentTimeMillis() -
 				(ONE_DAY_IN_MS * graphTimeframe.days), preferences);
 		if (tickerData.size() > 0) {
-			setupChart(tickerData);
+			setupChart(preferences, tickerData);
 			emptyChart = false;
 		} else {
 			emptyChart = true;
@@ -96,7 +96,7 @@ public class GraphPopupActivity extends Activity {
 		setContentView(R.layout.popup_graph_layout);
 	}
 
-	private void setupChart(List<TickerData> dataList) {
+	private void setupChart(WidgetPreferences preferences, List<TickerData> dataList) {
 		dataset = new XYMultipleSeriesDataset();
 		renderer = initChart();
 		XYSeries highSeries = addSeries(getString(R.string.high), Color.parseColor("#00CC00"), false);
@@ -106,18 +106,18 @@ public class GraphPopupActivity extends Activity {
 		XYSeries lastSeries = addSeries(getString(R.string.last), Color.WHITE, true);
 		for (TickerData data : dataList) {
 			//Log.d("Graphdata", data.toString());
-			addDataToSeriesIfNotNull(highSeries, data.getTimestamp().getTime(), data.getHigh());
-			addDataToSeriesIfNotNull(lowSeries, data.getTimestamp().getTime(), data.getLow());
-			addDataToSeriesIfNotNull(sellSeries, data.getTimestamp().getTime(), data.getSell());
-			addDataToSeriesIfNotNull(buySeries, data.getTimestamp().getTime(), data.getBuy());
-			addDataToSeriesIfNotNull(lastSeries, data.getTimestamp().getTime(), data.getLast());
+			addDataToSeriesIfNotNull(preferences, highSeries, data.getTimestamp().getTime(), data.getHigh());
+			addDataToSeriesIfNotNull(preferences, lowSeries, data.getTimestamp().getTime(), data.getLow());
+			addDataToSeriesIfNotNull(preferences, sellSeries, data.getTimestamp().getTime(), data.getSell());
+			addDataToSeriesIfNotNull(preferences, buySeries, data.getTimestamp().getTime(), data.getBuy());
+			addDataToSeriesIfNotNull(preferences, lastSeries, data.getTimestamp().getTime(), data.getLast());
 		}
 
 	}
 
-	private void addDataToSeriesIfNotNull(XYSeries series, long time, Double value) {
+	private void addDataToSeriesIfNotNull(WidgetPreferences preferences, XYSeries series, long time, Double value) {
 		if (value != null && value > 0) {
-			series.add(time, value);
+			series.add(time, value * preferences.getCurrencyUnit().scale);
 		}
 	}
 
