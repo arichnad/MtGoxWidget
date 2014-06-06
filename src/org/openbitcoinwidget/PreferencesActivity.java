@@ -18,158 +18,158 @@ import java.util.List;
  * http://www.vogella.de/articles/Android/article.html#preferences
  */
 public class PreferencesActivity extends PreferenceActivity {
-    private static final String SERVICE_KEY = "service";
-    private static final String COLOR_MODE_KEY = "colorMode";
-    private static final String CURRENCY_CONVERSION_KEY = "currencyConversion";
+	private static final String SERVICE_KEY = "service";
+	private static final String COLOR_MODE_KEY = "colorMode";
+	private static final String CURRENCY_CONVERSION_KEY = "currencyConversion";
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setResult(RESULT_CANCELED); // Cancelled until the user decides to add it
-        addPreferencesFromResource(R.xml.preferences);
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, true); // To set default values in dropdowns
-        final WidgetPreferences widgetPreferences = new WidgetPreferences();
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setResult(RESULT_CANCELED); // Cancelled until the user decides to add it
+		addPreferencesFromResource(R.xml.preferences);
+		PreferenceManager.setDefaultValues(this, R.xml.preferences, true); // To set default values in dropdowns
+		final WidgetPreferences widgetPreferences = new WidgetPreferences();
 
-        // Get the service ListPreference from the GUI
-        final Preference servicePref = findPreference("servicePref");
-        // Get the currency conversion ListPreference from the GUI
-        final Preference currencyConversionPref = findPreference("currencyConversionPref");
+		// Get the service ListPreference from the GUI
+		final Preference servicePref = findPreference("servicePref");
+		// Get the currency conversion ListPreference from the GUI
+		final Preference currencyConversionPref = findPreference("currencyConversionPref");
 
-        //updatePreferenceSummary(servicePref, selectedRateService.getName());
-        updateCurrencyChoices(widgetPreferences.getRateService());
-        servicePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                final RateService newRateService = RateService.valueOf((String) newValue);
-                widgetPreferences.setRateService(newRateService);
-                widgetPreferences.setCurrencyConversion(newRateService.getCurrencyConversions().get(0));
-                updatePreferenceSummary(servicePref, widgetPreferences.getRateService().getName());
-                updatePreferenceSummary(currencyConversionPref, widgetPreferences.getCurrencyConversion().description);
-                updateCurrencyChoices(widgetPreferences.getRateService());
+		//updatePreferenceSummary(servicePref, selectedRateService.getName());
+		updateCurrencyChoices(widgetPreferences.getRateService());
+		servicePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				final RateService newRateService = RateService.valueOf((String) newValue);
+				widgetPreferences.setRateService(newRateService);
+				widgetPreferences.setCurrencyConversion(newRateService.getCurrencyConversions().get(0));
+				updatePreferenceSummary(servicePref, widgetPreferences.getRateService().getName());
+				updatePreferenceSummary(currencyConversionPref, widgetPreferences.getCurrencyConversion().description);
+				updateCurrencyChoices(widgetPreferences.getRateService());
 
-                return true;
-            }
-        });
+				return true;
+			}
+		});
 
-        currencyConversionPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                widgetPreferences.setCurrencyConversion(CurrencyConversion.valueOf((String) newValue));
-                updatePreferenceSummary(currencyConversionPref, widgetPreferences.getCurrencyConversion().description);
+		currencyConversionPref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				widgetPreferences.setCurrencyConversion(CurrencyConversion.valueOf((String) newValue));
+				updatePreferenceSummary(currencyConversionPref, widgetPreferences.getCurrencyConversion().description);
 
-                return true;
-            }
-        });
+				return true;
+			}
+		});
 
-        // Get the color mode ListPreference from the GUI
-        final Preference colorModePref = findPreference("colorModePref");
-        //updatePreferenceSummary(colorModePref, selectedColorMode.name());
-        colorModePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-            public boolean onPreferenceChange(Preference preference, Object newValue) {
-                widgetPreferences.setColorMode(ColorMode.valueOf((String) newValue));
-                updatePreferenceSummary(colorModePref, widgetPreferences.getColorMode().name());
+		// Get the color mode ListPreference from the GUI
+		final Preference colorModePref = findPreference("colorModePref");
+		//updatePreferenceSummary(colorModePref, selectedColorMode.name());
+		colorModePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+			public boolean onPreferenceChange(Preference preference, Object newValue) {
+				widgetPreferences.setColorMode(ColorMode.valueOf((String) newValue));
+				updatePreferenceSummary(colorModePref, widgetPreferences.getColorMode().name());
 
-                return true;
-            }
-        });
+				return true;
+			}
+		});
 
-        // Get the service Add Widget button from the GUI
-        Preference addWidgetButton = findPreference("addWidget");
-        addWidgetButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+		// Get the service Add Widget button from the GUI
+		Preference addWidgetButton = findPreference("addWidget");
+		addWidgetButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
-            @Override
-            public boolean onPreferenceClick(Preference preference) {
-                updateWidgetWithWaitMessage(getAppWidgetId());
-                storePreferences(widgetPreferences);
-                startWidget(getAppWidgetId());
-                return true;
-            }
-        });
-    }
+			@Override
+			public boolean onPreferenceClick(Preference preference) {
+				updateWidgetWithWaitMessage(getAppWidgetId());
+				storePreferences(widgetPreferences);
+				startWidget(getAppWidgetId());
+				return true;
+			}
+		});
+	}
 
-    private void updateCurrencyChoices(RateService selectedRateService) {
-        ListPreference lp = (ListPreference)findPreference("currencyConversionPref");
-        List<CurrencyConversion> currencyConversions = selectedRateService.getCurrencyConversions();
-        CharSequence[] entries = new CharSequence[currencyConversions.size()];
-        CharSequence[] entryValues = new CharSequence[currencyConversions.size()];
-        int i = 0;
-        for (CurrencyConversion currencyConversion : currencyConversions) {
-            entries[i] = currencyConversion.description;
-            entryValues[i] = currencyConversion.name();
-            i++;
-        }
-        lp.setEntries(entries);
-        lp.setEntryValues(entryValues);
-        lp.setValueIndex(0);
-    }
+	private void updateCurrencyChoices(RateService selectedRateService) {
+		ListPreference lp = (ListPreference)findPreference("currencyConversionPref");
+		List<CurrencyConversion> currencyConversions = selectedRateService.getCurrencyConversions();
+		CharSequence[] entries = new CharSequence[currencyConversions.size()];
+		CharSequence[] entryValues = new CharSequence[currencyConversions.size()];
+		int i = 0;
+		for (CurrencyConversion currencyConversion : currencyConversions) {
+			entries[i] = currencyConversion.description;
+			entryValues[i] = currencyConversion.name();
+			i++;
+		}
+		lp.setEntries(entries);
+		lp.setEntryValues(entryValues);
+		lp.setValueIndex(0);
+	}
 
-    private void updateWidgetWithWaitMessage(int appWidgetId) {
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        WidgetProvider.updateAppWidgetWithWaitMessage(this, appWidgetManager, appWidgetId);
+	private void updateWidgetWithWaitMessage(int appWidgetId) {
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+		WidgetProvider.updateAppWidgetWithWaitMessage(this, appWidgetManager, appWidgetId);
 
-    }
+	}
 
-    private void startWidget(int appWidgetId) {
-        Intent resultValue = new Intent();
-        resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
-        setResult(RESULT_OK, resultValue);
-        finish();
+	private void startWidget(int appWidgetId) {
+		Intent resultValue = new Intent();
+		resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+		setResult(RESULT_OK, resultValue);
+		finish();
 
-        AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        WidgetProvider.updateAppWidgetAsync(this, appWidgetManager, appWidgetId);
-    }
+		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
+		WidgetProvider.updateAppWidgetAsync(this, appWidgetManager, appWidgetId);
+	}
 
-    private void updatePreferenceSummary(Preference preference, String currentPreference) {
-        preference.setSummary("Using: " + currentPreference);
-    }
-
-
-    private int getAppWidgetId() {
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            return extras.getInt(
-                    AppWidgetManager.EXTRA_APPWIDGET_ID,
-                    AppWidgetManager.INVALID_APPWIDGET_ID);
-        } else {
-            Log.e(WidgetProvider.LOG_TAG, "AppWidgetId not found!");
-            return 0;
-        }
-    }
+	private void updatePreferenceSummary(Preference preference, String currentPreference) {
+		preference.setSummary("Using: " + currentPreference);
+	}
 
 
-    private void storePreferences(WidgetPreferences widgetPreferences) {
-        SharedPreferences sharedPreferences = getSharedPreferences("" + getAppWidgetId(), Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(SERVICE_KEY, widgetPreferences.getRateService().name());
-        editor.putString(COLOR_MODE_KEY, widgetPreferences.getColorMode().name());
-        editor.putString(CURRENCY_CONVERSION_KEY, widgetPreferences.getCurrencyConversion().name());
-        editor.commit();
-    }
+	private int getAppWidgetId() {
+		Intent intent = getIntent();
+		Bundle extras = intent.getExtras();
+		if (extras != null) {
+			return extras.getInt(
+					AppWidgetManager.EXTRA_APPWIDGET_ID,
+					AppWidgetManager.INVALID_APPWIDGET_ID);
+		} else {
+			Log.e(WidgetProvider.LOG_TAG, "AppWidgetId not found!");
+			return 0;
+		}
+	}
 
-    // Deletes the preferences for the appWidgetId
-    public static void deletePrefs(Context context, int appWidgetId) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("" + appWidgetId, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.clear();
-        editor.commit();
-    }
 
-    // Returns null if no preferences are set for this widget id.
-    public static WidgetPreferences getWidgetPreferences(Context context, int appWidgetId) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("" + appWidgetId, Context.MODE_PRIVATE);
-        if (!sharedPreferences.contains(SERVICE_KEY)) {
-            return null;
-        }
+	private void storePreferences(WidgetPreferences widgetPreferences) {
+		SharedPreferences sharedPreferences = getSharedPreferences("" + getAppWidgetId(), Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.putString(SERVICE_KEY, widgetPreferences.getRateService().name());
+		editor.putString(COLOR_MODE_KEY, widgetPreferences.getColorMode().name());
+		editor.putString(CURRENCY_CONVERSION_KEY, widgetPreferences.getCurrencyConversion().name());
+		editor.commit();
+	}
 
-        WidgetPreferences widgetPreferences = new WidgetPreferences();
+	// Deletes the preferences for the appWidgetId
+	public static void deletePrefs(Context context, int appWidgetId) {
+		SharedPreferences sharedPreferences = context.getSharedPreferences("" + appWidgetId, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPreferences.edit();
+		editor.clear();
+		editor.commit();
+	}
 
-        String colorModeName = sharedPreferences.getString(COLOR_MODE_KEY, ColorMode.Default.name());
-        widgetPreferences.setColorMode(ColorMode.valueOf(colorModeName));
-        String serviceName = sharedPreferences.getString(SERVICE_KEY, RateService.getDefaultService().name());
-        widgetPreferences.setRateService(RateService.valueOf(serviceName));
-        String currencyConversionName = sharedPreferences.getString(CURRENCY_CONVERSION_KEY, CurrencyConversion.getDefault().name());
-        widgetPreferences.setCurrencyConversion(CurrencyConversion.valueOf(currencyConversionName));
+	// Returns null if no preferences are set for this widget id.
+	public static WidgetPreferences getWidgetPreferences(Context context, int appWidgetId) {
+		SharedPreferences sharedPreferences = context.getSharedPreferences("" + appWidgetId, Context.MODE_PRIVATE);
+		if (!sharedPreferences.contains(SERVICE_KEY)) {
+			return null;
+		}
 
-        return widgetPreferences;
-    }
+		WidgetPreferences widgetPreferences = new WidgetPreferences();
+
+		String colorModeName = sharedPreferences.getString(COLOR_MODE_KEY, ColorMode.Default.name());
+		widgetPreferences.setColorMode(ColorMode.valueOf(colorModeName));
+		String serviceName = sharedPreferences.getString(SERVICE_KEY, RateService.getDefaultService().name());
+		widgetPreferences.setRateService(RateService.valueOf(serviceName));
+		String currencyConversionName = sharedPreferences.getString(CURRENCY_CONVERSION_KEY, CurrencyConversion.getDefault().name());
+		widgetPreferences.setCurrencyConversion(CurrencyConversion.valueOf(currencyConversionName));
+
+		return widgetPreferences;
+	}
 
 }

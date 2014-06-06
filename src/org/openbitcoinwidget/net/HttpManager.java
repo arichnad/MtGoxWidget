@@ -59,7 +59,7 @@ public class HttpManager {
 		schReg.register(new Scheme("http", PlainSocketFactory
 				.getSocketFactory(), 80));
 		schReg.register(new Scheme("https", TrustAllSSLSocketFactory
-                .getDefault(), 443));
+				.getDefault(), 443));
 		ClientConnectionManager conMgr = new ThreadSafeClientConnManager(
 				params, schReg);
 		sClient = new DefaultHttpClient(conMgr, params);

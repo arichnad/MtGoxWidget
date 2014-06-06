@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/appwidget_box"
-              android:background="@drawable/my_border"
-              android:gravity="center"
-              android:orientation="vertical"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:padding="3dp">
+			  android:id="@+id/appwidget_box"
+			  android:background="@drawable/my_border"
+			  android:gravity="center"
+			  android:orientation="vertical"
+			  android:layout_width="fill_parent"
+			  android:layout_height="fill_parent"
+			  android:padding="3dp">
 
-    <!-- Info text -->
-    <TextView
-            android:id="@+id/appwidget_info"
-            android:gravity="center"
-            android:text="@string/appwidget_loading_text"
-            android:textSize="10dp"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#ffffff"/>
+	<!-- Info text -->
+	<TextView
+			android:id="@+id/appwidget_info"
+			android:gravity="center"
+			android:text="@string/appwidget_loading_text"
+			android:textSize="10dp"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:textColor="#ffffff"/>
 </LinearLayout>
 

@@ -33,85 +33,85 @@ import static org.openbitcoinwidget.WidgetProvider.LOG_TAG;
 
 public class DataOpenHelper extends SQLiteOpenHelper {
 	
-    private static final int DATABASE_VERSION = 5;
-    private static final String DATABASE_NAME = "openbitcoinwidget";
-    private static final String TICKER_DATA_TABLE_NAME = "ticker_data";
-    private static final String COLUMN_SOURCE = "source";
-    private static final String COLUMN_CURRENCY = "currency";
-    private static final String COLUMN_TIMESTAMP = "timestamp";
-    private static final String COLUMN_HIGH = "high";
-    private static final String COLUMN_LOW = "low";
-    private static final String COLUMN_LAST = "last";
-    private static final String COLUMN_BUY = "buy";
-    private static final String COLUMN_SELL = "sell";
-    private static final String LAST_TABLE_CREATE =
-                "CREATE TABLE " + TICKER_DATA_TABLE_NAME + " (" +
-                        COLUMN_SOURCE + " INTEGER NOT NULL DEFAULT " + RateService.getDefaultService().getId() + ", " +
-                        COLUMN_CURRENCY + " INTEGER NOT NULL DEFAULT " + CurrencyConversion.getDefault().id + ", " +
-                        COLUMN_TIMESTAMP + " INTEGER, " +
-                        COLUMN_HIGH + " REAL, " +
-                        COLUMN_LOW + " REAL, " +
-                        COLUMN_LAST + " REAL, " +
-                        COLUMN_BUY + " REAL, " +
-                        COLUMN_SELL + " REAL)";
+	private static final int DATABASE_VERSION = 5;
+	private static final String DATABASE_NAME = "openbitcoinwidget";
+	private static final String TICKER_DATA_TABLE_NAME = "ticker_data";
+	private static final String COLUMN_SOURCE = "source";
+	private static final String COLUMN_CURRENCY = "currency";
+	private static final String COLUMN_TIMESTAMP = "timestamp";
+	private static final String COLUMN_HIGH = "high";
+	private static final String COLUMN_LOW = "low";
+	private static final String COLUMN_LAST = "last";
+	private static final String COLUMN_BUY = "buy";
+	private static final String COLUMN_SELL = "sell";
+	private static final String LAST_TABLE_CREATE =
+				"CREATE TABLE " + TICKER_DATA_TABLE_NAME + " (" +
+						COLUMN_SOURCE + " INTEGER NOT NULL DEFAULT " + RateService.getDefaultService().getId() + ", " +
+						COLUMN_CURRENCY + " INTEGER NOT NULL DEFAULT " + CurrencyConversion.getDefault().id + ", " +
+						COLUMN_TIMESTAMP + " INTEGER, " +
+						COLUMN_HIGH + " REAL, " +
+						COLUMN_LOW + " REAL, " +
+						COLUMN_LAST + " REAL, " +
+						COLUMN_BUY + " REAL, " +
+						COLUMN_SELL + " REAL)";
 
 	private static final String QUERY_COUNT_LAST_VALUES =
-            "SELECT COUNT(*) FROM "
+			"SELECT COUNT(*) FROM "
 			+ TICKER_DATA_TABLE_NAME;
 
 	private static final String QUERY_LAST_TICKER_DATA =
-            "SELECT * FROM " + TICKER_DATA_TABLE_NAME +
-            " WHERE " + COLUMN_SOURCE + " = ? " +
-            " AND " + COLUMN_CURRENCY + " = ? " +
-            " ORDER BY " + COLUMN_TIMESTAMP + " DESC LIMIT 1";
+			"SELECT * FROM " + TICKER_DATA_TABLE_NAME +
+			" WHERE " + COLUMN_SOURCE + " = ? " +
+			" AND " + COLUMN_CURRENCY + " = ? " +
+			" ORDER BY " + COLUMN_TIMESTAMP + " DESC LIMIT 1";
 
-    private static final String QUERY_NEWEST_TICKER_DATA =
-            "SELECT * FROM " + TICKER_DATA_TABLE_NAME +
-            " WHERE " + COLUMN_TIMESTAMP + " > ? " +
-            " AND " + COLUMN_SOURCE + " = ? " +
-            " AND " + COLUMN_CURRENCY + " = ? " +
-            " ORDER BY " + COLUMN_TIMESTAMP + " DESC";
+	private static final String QUERY_NEWEST_TICKER_DATA =
+			"SELECT * FROM " + TICKER_DATA_TABLE_NAME +
+			" WHERE " + COLUMN_TIMESTAMP + " > ? " +
+			" AND " + COLUMN_SOURCE + " = ? " +
+			" AND " + COLUMN_CURRENCY + " = ? " +
+			" ORDER BY " + COLUMN_TIMESTAMP + " DESC";
 
 	private static final Long TIME_TO_KEEP_DATA_IN_SECS = 60*60*24*7L; // 7 days
 
-    DataOpenHelper(Context context) {
-	        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+	DataOpenHelper(Context context) {
+			super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-        db.execSQL(LAST_TABLE_CREATE);
+		db.execSQL(LAST_TABLE_CREATE);
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.i(LOG_TAG, "Upgrading DB from " + oldVersion + " to " + newVersion);
-        if (oldVersion == 3) {
-            // Upgrade from DB version 3
-            db.execSQL("ALTER TABLE " + TICKER_DATA_TABLE_NAME +
-                    " ADD COLUMN " + COLUMN_SOURCE + " INTEGER NOT NULL DEFAULT " + RateService.getDefaultService());
-        }
-        if (oldVersion >= 3 && oldVersion <=4 ) {
-            // Upgrade from DB version 3 and 4
-            db.execSQL("ALTER TABLE " + TICKER_DATA_TABLE_NAME +
-                    " ADD COLUMN " + COLUMN_CURRENCY + " INTEGER NOT NULL DEFAULT " + CurrencyConversion.getDefault().id);
-        }
+		Log.i(LOG_TAG, "Upgrading DB from " + oldVersion + " to " + newVersion);
+		if (oldVersion == 3) {
+			// Upgrade from DB version 3
+			db.execSQL("ALTER TABLE " + TICKER_DATA_TABLE_NAME +
+					" ADD COLUMN " + COLUMN_SOURCE + " INTEGER NOT NULL DEFAULT " + RateService.getDefaultService());
+		}
+		if (oldVersion >= 3 && oldVersion <=4 ) {
+			// Upgrade from DB version 3 and 4
+			db.execSQL("ALTER TABLE " + TICKER_DATA_TABLE_NAME +
+					" ADD COLUMN " + COLUMN_CURRENCY + " INTEGER NOT NULL DEFAULT " + CurrencyConversion.getDefault().id);
+		}
 
-        //db.execSQL("DROP TABLE " + TICKER_DATA_TABLE_NAME);
-        //onCreate(db);
+		//db.execSQL("DROP TABLE " + TICKER_DATA_TABLE_NAME);
+		//onCreate(db);
 	}
 
 	public void storeTickerData(TickerData data) {
 		SQLiteDatabase db = getWritableDatabase();
 		ContentValues values = new ContentValues();
-        values.put(COLUMN_SOURCE, data.getRateService().getId());
-        values.put(COLUMN_CURRENCY, data.getCurrencyConversion().id);
-        values.put(COLUMN_TIMESTAMP, System.currentTimeMillis()/1000);
+		values.put(COLUMN_SOURCE, data.getRateService().getId());
+		values.put(COLUMN_CURRENCY, data.getCurrencyConversion().id);
+		values.put(COLUMN_TIMESTAMP, System.currentTimeMillis()/1000);
 		values.put(COLUMN_LOW, data.getLow());
-        values.put(COLUMN_HIGH, data.getHigh());
-        values.put(COLUMN_LAST, data.getLast());
-        values.put(COLUMN_BUY, data.getBuy());
-        values.put(COLUMN_SELL, data.getSell());
+		values.put(COLUMN_HIGH, data.getHigh());
+		values.put(COLUMN_LAST, data.getLast());
+		values.put(COLUMN_BUY, data.getBuy());
+		values.put(COLUMN_SELL, data.getSell());
 		long result = db.insert(TICKER_DATA_TABLE_NAME, null, values);
 		if (result == -1) {
 			Log.e(LOG_TAG, "Error when inserting data: " + data);
@@ -134,35 +134,35 @@ public class DataOpenHelper extends SQLiteOpenHelper {
 	// Returns the last last value or null if no values have been stored.
 	public TickerData getLastTickerData(WidgetPreferences preferences) {
 		SQLiteDatabase db = getReadableDatabase();
-        String[] selection = {preferences.getRateService().getId().toString(),
-                preferences.getCurrencyConversion().id.toString()};
+		String[] selection = {preferences.getRateService().getId().toString(),
+				preferences.getCurrencyConversion().id.toString()};
 		Cursor cursor = db.rawQuery(QUERY_LAST_TICKER_DATA, selection);
 		TickerData lastData = null;
 		if (cursor.getCount() > 0) {
 			cursor.moveToFirst();
-            lastData = getTickerDataFromCursor(cursor);
+			lastData = getTickerDataFromCursor(cursor);
 		}
 		cursor.close();
 		db.close();
 		return lastData;
 	}
 
-    private TickerData getTickerDataFromCursor(Cursor cursor) {
-        TickerData lastData;
-        lastData = new TickerData();
-        lastData.setRateService(RateService.getById(cursor.getColumnIndexOrThrow(COLUMN_SOURCE)));
-        lastData.setCurrencyConversion(CurrencyConversion.getById(cursor.getColumnIndexOrThrow(COLUMN_CURRENCY)));
-        // Null values will be zeroes. If null is important use cursor.isNull(columnIndex)
-        lastData.setLow(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LOW)));
-        lastData.setHigh(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_HIGH)));
-        lastData.setLast(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LAST)));
-        lastData.setBuy(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_BUY)));
-        lastData.setSell(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SELL)));
-        lastData.setTimestamp(new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_TIMESTAMP))*1000));
-        return lastData;
-    }
+	private TickerData getTickerDataFromCursor(Cursor cursor) {
+		TickerData lastData;
+		lastData = new TickerData();
+		lastData.setRateService(RateService.getById(cursor.getColumnIndexOrThrow(COLUMN_SOURCE)));
+		lastData.setCurrencyConversion(CurrencyConversion.getById(cursor.getColumnIndexOrThrow(COLUMN_CURRENCY)));
+		// Null values will be zeroes. If null is important use cursor.isNull(columnIndex)
+		lastData.setLow(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LOW)));
+		lastData.setHigh(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_HIGH)));
+		lastData.setLast(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_LAST)));
+		lastData.setBuy(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_BUY)));
+		lastData.setSell(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SELL)));
+		lastData.setTimestamp(new Date(cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_TIMESTAMP))*1000));
+		return lastData;
+	}
 
-    public void cleanUp() {
+	public void cleanUp() {
 		SQLiteDatabase db = getWritableDatabase();
 		Long nowSecs = System.currentTimeMillis()/1000;
 		Long timeToDelete = nowSecs - TIME_TO_KEEP_DATA_IN_SECS;
@@ -171,19 +171,19 @@ public class DataOpenHelper extends SQLiteOpenHelper {
 		db.close();
 	}
 
-    public List<TickerData> getTickerData(Long since, WidgetPreferences preferences) {
-        List<TickerData> data = new ArrayList<TickerData>();
-        SQLiteDatabase db = getReadableDatabase();
-        String[] selection = {String.valueOf(since/1000), preferences.getRateService().getId().toString(),
-                preferences.getCurrencyConversion().id.toString()};
-        Cursor cursor = db.rawQuery(QUERY_NEWEST_TICKER_DATA, selection);
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            data.add(getTickerDataFromCursor(cursor));
-            cursor.moveToNext();
-        }
-        cursor.close();
-        db.close();
-        return data;
-    }
+	public List<TickerData> getTickerData(Long since, WidgetPreferences preferences) {
+		List<TickerData> data = new ArrayList<TickerData>();
+		SQLiteDatabase db = getReadableDatabase();
+		String[] selection = {String.valueOf(since/1000), preferences.getRateService().getId().toString(),
+				preferences.getCurrencyConversion().id.toString()};
+		Cursor cursor = db.rawQuery(QUERY_NEWEST_TICKER_DATA, selection);
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			data.add(getTickerDataFromCursor(cursor));
+			cursor.moveToNext();
+		}
+		cursor.close();
+		db.close();
+		return data;
+	}
 }

@@ -2,11 +2,11 @@
 
 <!-- Increasing the min values does not give a bigger 1x1 widget. -->
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
-    android:minWidth="40dp"
-    android:minHeight="40dp"
-    android:initialLayout="@layout/appwidget_provider"
-    android:configure="org.openbitcoinwidget.PreferencesActivity"
-    android:updatePeriodMillis="1800000"
-    android:widgetCategory="keyguard|home_screen">
+	android:minWidth="40dp"
+	android:minHeight="40dp"
+	android:initialLayout="@layout/appwidget_provider"
+	android:configure="org.openbitcoinwidget.PreferencesActivity"
+	android:updatePeriodMillis="1800000"
+	android:widgetCategory="keyguard|home_screen">
 </appwidget-provider>
 

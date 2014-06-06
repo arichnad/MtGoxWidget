@@ -37,17 +37,17 @@ public class TrustAllSSLSocketFactory extends SSLSocketFactory {
 			factory = sslcontext.getSocketFactory();
 			setHostnameVerifier(new AllowAllHostnameVerifier());
 		} catch (Exception e) {
-            Log.e(WidgetProvider.LOG_TAG, "Error when creating SSL socket factory", e);
+			Log.e(WidgetProvider.LOG_TAG, "Error when creating SSL socket factory", e);
 		}
 	}
 
 	public static SocketFactory getDefault() {
-        try {
-		    return new TrustAllSSLSocketFactory();
-        } catch (Exception e) {
-            Log.e(WidgetProvider.LOG_TAG, "Error when creating SSL socket factory", e);
-            throw new RuntimeException("Error when creating SSL socket factory", e);
-        }
+		try {
+			return new TrustAllSSLSocketFactory();
+		} catch (Exception e) {
+			Log.e(WidgetProvider.LOG_TAG, "Error when creating SSL socket factory", e);
+			throw new RuntimeException("Error when creating SSL socket factory", e);
+		}
 	}
 
 	@Override

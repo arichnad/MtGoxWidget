@@ -1,33 +1,33 @@
 <resources>
-    <string-array name="serviceList">
-        <item>Bitstamp (BTC)</item>
-        <item>Coinbase (BTC)</item>
-        <item>Camp BX (BTC)</item>
-        <item>BTC-e (BTC, LTC)</item>
-        <item>Bitcurex (BTC)</item>
-        <item>Bitpay (BTC)</item>
-        <item>Bter (BTC, LTC, QRK)</item>
-        <item>BitKonan (BTC)</item>
-        <item>The Rock (BTC, LTC)</item>
-        <item>Bit2C (BTC)</item>
-    </string-array>
+	<string-array name="serviceList">
+		<item>Bitstamp (BTC)</item>
+		<item>Coinbase (BTC)</item>
+		<item>Camp BX (BTC)</item>
+		<item>BTC-e (BTC, LTC)</item>
+		<item>Bitcurex (BTC)</item>
+		<item>Bitpay (BTC)</item>
+		<item>Bter (BTC, LTC, QRK)</item>
+		<item>BitKonan (BTC)</item>
+		<item>The Rock (BTC, LTC)</item>
+		<item>Bit2C (BTC)</item>
+	</string-array>
 
-    <string-array name="serviceValues">
-        <item>BITSTAMP</item>
-        <item>COINBASE</item>
-        <item>CAMPBX</item>
-        <item>BTCE</item>
-        <item>BITCUREX</item>
-        <item>BITPAY</item>
-        <item>BTER</item>
-        <item>BITKONAN</item>
-        <item>THEROCK</item>
-        <item>BIT2C</item>
-    </string-array>
+	<string-array name="serviceValues">
+		<item>BITSTAMP</item>
+		<item>COINBASE</item>
+		<item>CAMPBX</item>
+		<item>BTCE</item>
+		<item>BITCUREX</item>
+		<item>BITPAY</item>
+		<item>BTER</item>
+		<item>BITKONAN</item>
+		<item>THEROCK</item>
+		<item>BIT2C</item>
+	</string-array>
 
-    <string-array name="colorModeList">
-        <item>Default</item>
-        <item>Grayscale</item>
-    </string-array>
+	<string-array name="colorModeList">
+		<item>Default</item>
+		<item>Grayscale</item>
+	</string-array>
 
 </resources>
