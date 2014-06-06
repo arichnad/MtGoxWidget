@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -29,12 +29,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static st.brothas.mtgoxwidget.MtGoxWidgetProvider.LOG_TAG;
+import static org.openbitcoinwidget.WidgetProvider.LOG_TAG;
 
-public class MtGoxDataOpenHelper extends SQLiteOpenHelper {
+public class DataOpenHelper extends SQLiteOpenHelper {
 	
     private static final int DATABASE_VERSION = 5;
-    private static final String DATABASE_NAME = "mtgox";
+    private static final String DATABASE_NAME = "openbitcoinwidget";
     private static final String TICKER_DATA_TABLE_NAME = "ticker_data";
     private static final String COLUMN_SOURCE = "source";
     private static final String COLUMN_CURRENCY = "currency";
@@ -74,7 +74,7 @@ public class MtGoxDataOpenHelper extends SQLiteOpenHelper {
 
 	private static final Long TIME_TO_KEEP_DATA_IN_SECS = 60*60*24*7L; // 7 days
 
-    MtGoxDataOpenHelper(Context context) {
+    DataOpenHelper(Context context) {
 	        super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 
@@ -101,7 +101,7 @@ public class MtGoxDataOpenHelper extends SQLiteOpenHelper {
         //onCreate(db);
 	}
 
-	public void storeTickerData(MtGoxTickerData data) {
+	public void storeTickerData(TickerData data) {
 		SQLiteDatabase db = getWritableDatabase();
 		ContentValues values = new ContentValues();
         values.put(COLUMN_SOURCE, data.getRateService().getId());
@@ -132,12 +132,12 @@ public class MtGoxDataOpenHelper extends SQLiteOpenHelper {
 	}
 
 	// Returns the last last value or null if no values have been stored.
-	public MtGoxTickerData getLastTickerData(WidgetPreferences preferences) {
+	public TickerData getLastTickerData(WidgetPreferences preferences) {
 		SQLiteDatabase db = getReadableDatabase();
         String[] selection = {preferences.getRateService().getId().toString(),
                 preferences.getCurrencyConversion().id.toString()};
 		Cursor cursor = db.rawQuery(QUERY_LAST_TICKER_DATA, selection);
-		MtGoxTickerData lastData = null;
+		TickerData lastData = null;
 		if (cursor.getCount() > 0) {
 			cursor.moveToFirst();
             lastData = getTickerDataFromCursor(cursor);
@@ -147,9 +147,9 @@ public class MtGoxDataOpenHelper extends SQLiteOpenHelper {
 		return lastData;
 	}
 
-    private MtGoxTickerData getTickerDataFromCursor(Cursor cursor) {
-        MtGoxTickerData lastData;
-        lastData = new MtGoxTickerData();
+    private TickerData getTickerDataFromCursor(Cursor cursor) {
+        TickerData lastData;
+        lastData = new TickerData();
         lastData.setRateService(RateService.getById(cursor.getColumnIndexOrThrow(COLUMN_SOURCE)));
         lastData.setCurrencyConversion(CurrencyConversion.getById(cursor.getColumnIndexOrThrow(COLUMN_CURRENCY)));
         // Null values will be zeroes. If null is important use cursor.isNull(columnIndex)
@@ -171,8 +171,8 @@ public class MtGoxDataOpenHelper extends SQLiteOpenHelper {
 		db.close();
 	}
 
-    public List<MtGoxTickerData> getTickerData(Long since, WidgetPreferences preferences) {
-        List<MtGoxTickerData> data = new ArrayList<MtGoxTickerData>();
+    public List<TickerData> getTickerData(Long since, WidgetPreferences preferences) {
+        List<TickerData> data = new ArrayList<TickerData>();
         SQLiteDatabase db = getReadableDatabase();
         String[] selection = {String.valueOf(since/1000), preferences.getRateService().getId().toString(),
                 preferences.getCurrencyConversion().id.toString()};

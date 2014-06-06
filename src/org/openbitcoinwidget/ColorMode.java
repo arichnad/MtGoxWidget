@@ -1,3 +1,3 @@
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 public enum ColorMode {Default, Grayscale}

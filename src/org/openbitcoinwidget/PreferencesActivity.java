@@ -1,4 +1,4 @@
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -17,7 +17,7 @@ import java.util.List;
  * http://www.kaloer.com/android-preferences
  * http://www.vogella.de/articles/Android/article.html#preferences
  */
-public class MtGoxPreferencesActivity extends PreferenceActivity {
+public class PreferencesActivity extends PreferenceActivity {
     private static final String SERVICE_KEY = "service";
     private static final String COLOR_MODE_KEY = "colorMode";
     private static final String CURRENCY_CONVERSION_KEY = "currencyConversion";
@@ -103,7 +103,7 @@ public class MtGoxPreferencesActivity extends PreferenceActivity {
 
     private void updateWidgetWithWaitMessage(int appWidgetId) {
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        MtGoxWidgetProvider.updateAppWidgetWithWaitMessage(this, appWidgetManager, appWidgetId);
+        WidgetProvider.updateAppWidgetWithWaitMessage(this, appWidgetManager, appWidgetId);
 
     }
 
@@ -114,7 +114,7 @@ public class MtGoxPreferencesActivity extends PreferenceActivity {
         finish();
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-        MtGoxWidgetProvider.updateAppWidgetAsync(this, appWidgetManager, appWidgetId);
+        WidgetProvider.updateAppWidgetAsync(this, appWidgetManager, appWidgetId);
     }
 
     private void updatePreferenceSummary(Preference preference, String currentPreference) {
@@ -130,7 +130,7 @@ public class MtGoxPreferencesActivity extends PreferenceActivity {
                     AppWidgetManager.EXTRA_APPWIDGET_ID,
                     AppWidgetManager.INVALID_APPWIDGET_ID);
         } else {
-            Log.e("mtgox", "AppWidgetId not found!");
+            Log.e(WidgetProvider.LOG_TAG, "AppWidgetId not found!");
             return 0;
         }
     }

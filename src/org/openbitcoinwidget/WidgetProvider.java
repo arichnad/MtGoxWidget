@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -33,7 +33,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
-import st.brothas.mtgoxwidget.net.HttpManager;
+import org.openbitcoinwidget.net.HttpManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,13 +43,13 @@ import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static st.brothas.mtgoxwidget.CurrencyConversion.VirtualCurrency.LITECOIN;
+import static org.openbitcoinwidget.CurrencyConversion.VirtualCurrency.LITECOIN;
 
 /**
  *
  */
-public class MtGoxWidgetProvider extends AppWidgetProvider {
-    public static final String LOG_TAG = "MtGox";
+public class WidgetProvider extends AppWidgetProvider {
+    public static final String LOG_TAG = "";
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("E HH:mm");
     private static final int DATA_IS_CONSIDERED_OLD_AFTER_MINUTES = 60;
 
@@ -70,7 +70,7 @@ public class MtGoxWidgetProvider extends AppWidgetProvider {
 
     private static void updateAppWidget(final Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
 
-        WidgetPreferences preferences = MtGoxPreferencesActivity.getWidgetPreferences(context, appWidgetId);
+        WidgetPreferences preferences = PreferencesActivity.getWidgetPreferences(context, appWidgetId);
 
         if (preferences == null) {
             // Don't do anything unless the rate service has been chosen.
@@ -98,10 +98,10 @@ public class MtGoxWidgetProvider extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.appwidget_box, pendingIntent);
         views.setTextViewText(R.id.appwidget_service_name, preferences.getRateService().getName());
 
-        MtGoxDataOpenHelper dbHelper = new MtGoxDataOpenHelper(context);
-        MtGoxTickerData prevData = dbHelper.getLastTickerData(preferences);
+        DataOpenHelper dbHelper = new DataOpenHelper(context);
+        TickerData prevData = dbHelper.getLastTickerData(preferences);
 
-        MtGoxTickerData newData;
+        TickerData newData;
         String latestQuote = getLatestQuote(preferences);
         if (latestQuote != null && !latestQuote.equals("")) {
             newData = preferences.getRateService().parseJSON(latestQuote);
@@ -131,7 +131,7 @@ public class MtGoxWidgetProvider extends AppWidgetProvider {
         return false;
     }
 
-    private static void updateViews(RemoteViews views, MtGoxTickerData prevData, MtGoxTickerData newData,
+    private static void updateViews(RemoteViews views, TickerData prevData, TickerData newData,
                                     WidgetPreferences preferences) {
         String updated = "@ " + dateFormat.format(newData.getTimestamp());
         String lastRounded = round(newData.getLast());
@@ -159,10 +159,10 @@ public class MtGoxWidgetProvider extends AppWidgetProvider {
         // Set Litecoin logo if that is the chosen currency.
         switch (preferences.getCurrencyConversion().virtualCurrency) {
             case LITECOIN:
-                views.setImageViewResource(R.id.appwidget_logo, R.drawable.lc_logo_30);
+                views.setImageViewResource(R.id.appwidget_logo, R.drawable.logo);
                 break;
             case QUARK:
-                views.setImageViewResource(R.id.appwidget_logo, R.drawable.qrk_logo_30);
+                views.setImageViewResource(R.id.appwidget_logo, R.drawable.logo);
                 break;
             // The Bitcoin logo is default in the layout.
         }
@@ -243,7 +243,7 @@ public class MtGoxWidgetProvider extends AppWidgetProvider {
 	}
 
 
-	private static void storeLastValueIfNotNull(MtGoxDataOpenHelper dbHelper, MtGoxTickerData data) {
+	private static void storeLastValueIfNotNull(DataOpenHelper dbHelper, TickerData data) {
 		if (data != null) {
 			dbHelper.storeTickerData(data);
 			dbHelper.cleanUp();
@@ -289,7 +289,7 @@ public class MtGoxWidgetProvider extends AppWidgetProvider {
     public void onDeleted(Context context, int[] appWidgetIds) {
         // When the user deletes the widget, delete the preference associated with it.
         for (int appWidgetId : appWidgetIds) {
-            MtGoxPreferencesActivity.deletePrefs(context, appWidgetId);
+            PreferencesActivity.deletePrefs(context, appWidgetId);
         }
     }
 

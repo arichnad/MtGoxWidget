@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <resources>
-    <string name="app_name">Bitcoin Widget</string>
+    <string name="app_name">Open Bitcoin Widget</string>
     <string name="empty_graph">No data available, please wait until the widget has been refreshed or refresh manually (press menu).</string>
     <string name="last">Last</string>
     <string name="high">High</string>

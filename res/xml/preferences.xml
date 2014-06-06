@@ -11,7 +11,7 @@
             android:key="servicePref"
             android:entries="@array/serviceList"
             android:entryValues="@array/serviceValues"
-            android:defaultValue="MTGOX" />
+            android:defaultValue="BITSTAMP" />
 
         <ListPreference
                 android:title="Currency"

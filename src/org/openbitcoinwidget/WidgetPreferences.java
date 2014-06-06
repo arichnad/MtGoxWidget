@@ -1,4 +1,4 @@
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 public class WidgetPreferences {
 

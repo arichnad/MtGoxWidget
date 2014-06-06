@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 import java.util.Date;
 
@@ -23,7 +23,7 @@ import java.util.Date;
 /**
  *
  */
-public class MtGoxTickerData {
+public class TickerData {
 
     private RateService rateService;
     private CurrencyConversion currencyConversion;
@@ -34,7 +34,7 @@ public class MtGoxTickerData {
     private Double sell;
     private Date timestamp;
 
-    public MtGoxTickerData() {
+    public TickerData() {
         timestamp = new Date();
     }
 
@@ -104,7 +104,7 @@ public class MtGoxTickerData {
 
     @Override
     public String toString() {
-        return "MtGoxTickerData{" +
+        return "TickerData{" +
                 "buy=" + buy +
                 ", last=" + last +
                 ", low=" + low +

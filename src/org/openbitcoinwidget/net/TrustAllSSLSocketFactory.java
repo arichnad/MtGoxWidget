@@ -1,4 +1,4 @@
-package st.brothas.mtgoxwidget.net;
+package org.openbitcoinwidget.net;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -15,7 +15,7 @@ import android.util.Log;
 import org.apache.http.conn.scheme.SocketFactory;
 import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import st.brothas.mtgoxwidget.MtGoxWidgetProvider;
+import org.openbitcoinwidget.WidgetProvider;
 
 
 /*
@@ -37,7 +37,7 @@ public class TrustAllSSLSocketFactory extends SSLSocketFactory {
 			factory = sslcontext.getSocketFactory();
 			setHostnameVerifier(new AllowAllHostnameVerifier());
 		} catch (Exception e) {
-            Log.e(MtGoxWidgetProvider.LOG_TAG, "Error when creating SSL socket factory", e);
+            Log.e(WidgetProvider.LOG_TAG, "Error when creating SSL socket factory", e);
 		}
 	}
 
@@ -45,7 +45,7 @@ public class TrustAllSSLSocketFactory extends SSLSocketFactory {
         try {
 		    return new TrustAllSSLSocketFactory();
         } catch (Exception e) {
-            Log.e(MtGoxWidgetProvider.LOG_TAG, "Error when creating SSL socket factory", e);
+            Log.e(WidgetProvider.LOG_TAG, "Error when creating SSL socket factory", e);
             throw new RuntimeException("Error when creating SSL socket factory", e);
         }
 	}

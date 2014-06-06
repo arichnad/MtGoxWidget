@@ -1,11 +1,11 @@
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
-import static st.brothas.mtgoxwidget.CurrencyConversion.VirtualCurrency.LITECOIN;
-import static st.brothas.mtgoxwidget.CurrencyConversion.VirtualCurrency.QUARK;
+import static org.openbitcoinwidget.CurrencyConversion.VirtualCurrency.LITECOIN;
+import static org.openbitcoinwidget.CurrencyConversion.VirtualCurrency.QUARK;
 
 public enum CurrencyConversion {
 

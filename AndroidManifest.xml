@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="st.brothas.mtgoxwidget"
-      android:versionCode="13" android:versionName="1.0.0">
+      package="org.openbitcoinwidget"
+      android:versionCode="14" android:versionName="0.0.1">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -9,9 +9,9 @@
     <!-- If the below is required="true" only some 500+ devices are supported instead of 4700+. -->
     <uses-feature android:name="android.software.app_widgets" android:required="false" />
 
-    <application android:icon="@drawable/bc_logo_60" android:label="@string/app_name">
+    <application android:icon="@drawable/logo" android:label="@string/app_name">
 
-        <receiver android:name=".MtGoxWidgetProvider">
+        <receiver android:name=".WidgetProvider">
             <meta-data android:name="android.appwidget.provider"
                     android:resource="@xml/appwidget_provider" />
             <intent-filter>
@@ -27,7 +27,7 @@
         </activity>
 
         <activity
-                android:name=".MtGoxPreferencesActivity"
+                android:name=".PreferencesActivity"
                 android:label="Preferences">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>

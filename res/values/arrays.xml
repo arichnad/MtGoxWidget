@@ -1,9 +1,9 @@
 <resources>
     <string-array name="serviceList">
-        <item>Camp BX (BTC)</item>
         <item>Bitstamp (BTC)</item>
-        <item>BTC-e (BTC, LTC)</item>
         <item>Coinbase (BTC)</item>
+        <item>Camp BX (BTC)</item>
+        <item>BTC-e (BTC, LTC)</item>
         <item>Bitcurex (BTC)</item>
         <item>Bitpay (BTC)</item>
         <item>Bter (BTC, LTC, QRK)</item>
@@ -13,10 +13,10 @@
     </string-array>
 
     <string-array name="serviceValues">
-        <item>CAMPBX</item>
         <item>BITSTAMP</item>
-        <item>BTCE</item>
         <item>COINBASE</item>
+        <item>CAMPBX</item>
+        <item>BTCE</item>
         <item>BITCUREX</item>
         <item>BITPAY</item>
         <item>BTER</item>

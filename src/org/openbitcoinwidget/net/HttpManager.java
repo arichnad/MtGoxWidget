@@ -1,4 +1,4 @@
-package st.brothas.mtgoxwidget.net;
+package org.openbitcoinwidget.net;
 
 import java.io.IOException;
 
@@ -38,7 +38,7 @@ public class HttpManager {
 		HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
 		HttpProtocolParams.setContentCharset(params, "UTF-8");
 		HttpProtocolParams.setUseExpectContinue(params, true);
-		HttpProtocolParams.setUserAgent(params, "MtGoxWidget/0.1");
+		HttpProtocolParams.setUserAgent(params, "OpenBitcoinWidget/0.1");
 
 		// Make pool
 		ConnPerRoute connPerRoute = new ConnPerRouteBean(12);

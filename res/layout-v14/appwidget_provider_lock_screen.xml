@@ -60,7 +60,7 @@
                 android:layout_height="30dp"
                 android:layout_marginRight="3dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/bc_logo_30"/>
+                android:src="@drawable/logo"/>
 
         <!-- Service name -->
         <TextView

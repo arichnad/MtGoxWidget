@@ -5,7 +5,7 @@
     android:minWidth="40dp"
     android:minHeight="40dp"
     android:initialLayout="@layout/appwidget_provider"
-    android:configure="st.brothas.mtgoxwidget.MtGoxPreferencesActivity"
+    android:configure="org.openbitcoinwidget.PreferencesActivity"
     android:updatePeriodMillis="1800000"
     android:widgetCategory="keyguard|home_screen">
 </appwidget-provider>

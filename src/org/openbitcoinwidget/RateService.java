@@ -1,4 +1,4 @@
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -6,71 +6,46 @@ import org.json.JSONObject;
 
 import java.util.*;
 
-import static st.brothas.mtgoxwidget.CurrencyConversion.*;
-import static st.brothas.mtgoxwidget.MtGoxTickerUtil.*;
+import static org.openbitcoinwidget.CurrencyConversion.*;
+import static org.openbitcoinwidget.TickerUtil.*;
 
 public enum RateService {
-            // Mtgox shut down trading February 2014.
-    MTGOX(1, "Mt Gox",
-            new TickerUrl(BTC_USD, "https://data.mtgox.com/api/2/BTCUSD/money/ticker"),
-            new TickerUrl(BTC_EUR, "https://data.mtgox.com/api/2/BTCEUR/money/ticker"),
-            new TickerUrl(BTC_GBP, "https://data.mtgox.com/api/2/BTCGBP/money/ticker"),
-            new TickerUrl(BTC_AUD, "https://data.mtgox.com/api/2/BTCAUD/money/ticker"),
-            new TickerUrl(BTC_CAD, "https://data.mtgox.com/api/2/BTCCAD/money/ticker"),
-            new TickerUrl(BTC_CNY, "https://data.mtgox.com/api/2/BTCCNY/money/ticker"),
-            new TickerUrl(BTC_JPY, "https://data.mtgox.com/api/2/BTCJPY/money/ticker"),
-            new TickerUrl(BTC_RUB, "https://data.mtgox.com/api/2/BTCRUB/money/ticker"),
-            new TickerUrl(BTC_SEK, "https://data.mtgox.com/api/2/BTCSEK/money/ticker"),
-            new TickerUrl(BTC_PLN, "https://data.mtgox.com/api/2/BTCPLN/money/ticker")),
+    CAMPBX(1, "Camp BX", new TickerUrl(BTC_USD, "http://campbx.com/api/xticker.php")),
 
-            // TradeHill shut down trading February 13, 2012.
-    TRADEHILL(2,"TradeHill"),
+    BITSTAMP(2,"Bitstamp", new TickerUrl(BTC_USD, "https://www.bitstamp.net/api/ticker/")),
 
-    CAMPBX(3, "Camp BX", new TickerUrl(BTC_USD, "http://campbx.com/api/xticker.php")),
-
-    // ExchB is closed since October 16, 2011.
-    EXCHB(4,"ExchB"),
-
-    // Bitfloor is closed since April 17, 2013.
-    BITFLOOR(5,"Bitfloor", new TickerUrl(BTC_USD, "https://api.bitfloor.com/ticker/1")),
-
-    BITSTAMP(6,"Bitstamp", new TickerUrl(BTC_USD, "https://www.bitstamp.net/api/ticker/")),
-
-    // CryptoXChange is closed since November 19, 2012.
-    CRYPTOXCHANGE (7, "Crypto X Change", new TickerUrl(BTC_USD, "http://cryptoxchange.com/api/v0/data/BTCUSD/ticker")),
-
-    BTCE (8, "BTC-e",
+    BTCE (3, "BTC-e",
             new TickerUrl(BTC_USD, "https://btc-e.com/api/2/btc_usd/ticker"),
             new TickerUrl(BTC_EUR, "https://btc-e.com/api/2/btc_eur/ticker"),
             new TickerUrl(LTC_USD, "https://btc-e.com/api/2/ltc_usd/ticker"),
             new TickerUrl(LTC_EUR, "https://btc-e.com/api/2/ltc_eur/ticker"),
             new TickerUrl(LTC_BTC, "https://btc-e.com/api/2/ltc_btc/ticker")),
 
-    COINBASE (9, "Coinbase", new TickerUrl(BTC_USD, "https://coinbase.com/api/v1/currencies/exchange_rates")),
+    COINBASE (4, "Coinbase", new TickerUrl(BTC_USD, "https://coinbase.com/api/v1/currencies/exchange_rates")),
 
-    BITCUREX(10, "Bitcurex",
+    BITCUREX(5, "Bitcurex",
             new TickerUrl(BTC_PLN, "https://pln.bitcurex.com/data/ticker.json"),
             new TickerUrl(BTC_EUR, "https://eur.bitcurex.com/data/ticker.json")),
 
-    BITPAY(11, "Bitpay", new TickerUrl(BTC_USD, "https://bitpay.com/api/rates")),
+    BITPAY(6, "Bitpay", new TickerUrl(BTC_USD, "https://bitpay.com/api/rates")),
 
-    BTER(12, "BTER",
+    BTER(7, "BTER",
             new TickerUrl(BTC_CNY, "https://bter.com/api/1/ticker/btc_cny"),
             new TickerUrl(LTC_CNY, "https://bter.com/api/1/ticker/ltc_cny"),
             new TickerUrl(LTC_BTC, "https://bter.com/api/1/ticker/ltc_btc"),
             new TickerUrl(QRK_BTC, "https://bter.com/api/1/ticker/qrk_btc"),
             new TickerUrl(QRK_CNY, "https://bter.com/api/1/ticker/qrk_cny")),
 
-    BITKONAN(13, "BKonan", new TickerUrl(BTC_USD, "https://bitkonan.com/api/ticker/")),
+    BITKONAN(8, "BKonan", new TickerUrl(BTC_USD, "https://bitkonan.com/api/ticker/")),
 
-    THEROCK(14, "TheRock",
+    THEROCK(9, "TheRock",
             new TickerUrl(BTC_USD, "https://www.therocktrading.com/api/ticker/BTCUSD"),
             new TickerUrl(BTC_EUR, "https://www.therocktrading.com/api/ticker/BTCEUR"),
             new TickerUrl(LTC_BTC, "https://www.therocktrading.com/api/ticker/LTCBTC"),
             new TickerUrl(LTC_USD, "https://www.therocktrading.com/api/ticker/LTCUSD"),
             new TickerUrl(LTC_EUR, "https://www.therocktrading.com/api/ticker/LTCEUR")),
 
-    BIT2C(15, "Bit2C", new TickerUrl(BTC_ILS, "https://www.bit2c.co.il/Exchanges/NIS/Ticker.json"));
+    BIT2C(10, "Bit2C", new TickerUrl(BTC_ILS, "https://www.bit2c.co.il/Exchanges/NIS/Ticker.json"));
 
 
     private final int id;
@@ -89,8 +64,8 @@ public enum RateService {
             lookup.put(s.getId(), s);
     }
 
-    public MtGoxTickerData parseJSON(String json) {
-        MtGoxTickerData tickerData = new MtGoxTickerData();
+    public TickerData parseJSON(String json) {
+        TickerData tickerData = new TickerData();
 
         tickerData.setRateService(this);
         switch (this) {
@@ -160,25 +135,7 @@ public enum RateService {
                 }
                 break;
             default:
-                // Mt Gox:
-                // {"result":"success","data":{"high":{"value":"74.90000","value_int":"7490000","display":"$74.90","display_short":"$74.90","currency":"USD"},
-                // "low":{"value":"65.28800","value_int":"6528800","display":"$65.29","display_short":"$65.29","currency":"USD"},
-                // "avg":{"value":"70.57377","value_int":"7057377","display":"$70.57","display_short":"$70.57","currency":"USD"},
-                // "vwap":{"value":"70.43952","value_int":"7043952","display":"$70.44","display_short":"$70.44","currency":"USD"},
-                // "vol":{"value":"97482.89064204","value_int":"9748289064204","display":"97,482.89\u00a0BTC","display_short":"97,482.89\u00a0BTC","currency":"BTC"},
-                // "last_local":{"value":"71.32568","value_int":"7132568","display":"$71.33","display_short":"$71.33","currency":"USD"},
-                // "last":{"value":"71.32568","value_int":"7132568","display":"$71.33","display_short":"$71.33","currency":"USD"},
-                // "last_orig":{"value":"47.54586","value_int":"4754586","display":"\u00a347.55","display_short":"\u00a347.55","currency":"GBP"},
-                // "last_all":{"value":"72.07386","value_int":"7207386","display":"$72.07","display_short":"$72.07","currency":"USD"},
-                // "buy":{"value":"70.06874","value_int":"7006874","display":"$70.07","display_short":"$70.07","currency":"USD"},
-                // "sell":{"value":"71.32568","value_int":"7132568","display":"$71.33","display_short":"$71.33","currency":"USD"},
-                // "now":"1363938453428998"}}
-
-                tickerData.setLast(tryToParseDouble(getJSONTickerKeyFromObjects(parseJSONObject(json), "data", "last", "value")));
-                tickerData.setLow(tryToParseDouble(getJSONTickerKeyFromObjects(parseJSONObject(json), "data", "low", "value")));
-                tickerData.setHigh(tryToParseDouble(getJSONTickerKeyFromObjects(parseJSONObject(json), "data", "high", "value")));
-                tickerData.setBuy(tryToParseDouble(getJSONTickerKeyFromObjects(parseJSONObject(json), "data", "buy", "value")));
-                tickerData.setSell(tryToParseDouble(getJSONTickerKeyFromObjects(parseJSONObject(json), "data", "sell", "value")));
+				throw new IllegalStateException("Do not know about this service: " + this);
         }
 
         return tickerData;

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 import android.app.Activity;
 import android.appwidget.AppWidgetManager;
@@ -77,9 +77,9 @@ public class GraphPopupActivity extends Activity {
     }
 
     private void showGraphPopup() {
-        MtGoxDataOpenHelper db = new MtGoxDataOpenHelper(this);
-        WidgetPreferences preferences = MtGoxPreferencesActivity.getWidgetPreferences(this, appWidgetId);
-        List<MtGoxTickerData> tickerData = db.getTickerData(System.currentTimeMillis() -
+        DataOpenHelper db = new DataOpenHelper(this);
+        WidgetPreferences preferences = PreferencesActivity.getWidgetPreferences(this, appWidgetId);
+        List<TickerData> tickerData = db.getTickerData(System.currentTimeMillis() -
                 (ONE_DAY_IN_MS * graphTimeframe.days), preferences);
         if (tickerData.size() > 0) {
             setupChart(tickerData);
@@ -96,7 +96,7 @@ public class GraphPopupActivity extends Activity {
         setContentView(R.layout.popup_graph_layout);
     }
 
-    private void setupChart(List<MtGoxTickerData> dataList) {
+    private void setupChart(List<TickerData> dataList) {
         dataset = new XYMultipleSeriesDataset();
         renderer = initChart();
         XYSeries highSeries = addSeries(getString(R.string.high), Color.parseColor("#00CC00"), false);
@@ -104,7 +104,7 @@ public class GraphPopupActivity extends Activity {
         XYSeries sellSeries = addSeries(getString(R.string.sell), Color.parseColor("#AAFFAA"), false);
         XYSeries buySeries = addSeries(getString(R.string.buy), Color.parseColor("#FFAAAA"), false);
         XYSeries lastSeries = addSeries(getString(R.string.last), Color.WHITE, true);
-        for (MtGoxTickerData data : dataList) {
+        for (TickerData data : dataList) {
             //Log.d("Graphdata", data.toString());
             addDataToSeriesIfNotNull(highSeries, data.getTimestamp().getTime(), data.getHigh());
             addDataToSeriesIfNotNull(lowSeries, data.getTimestamp().getTime(), data.getLow());
@@ -228,10 +228,10 @@ public class GraphPopupActivity extends Activity {
             case R.id.refreshMenu:
                 finish();
                 String toastText = "Refreshing rate from " +
-                        MtGoxPreferencesActivity.getWidgetPreferences(this, appWidgetId).getRateService().getName()+ "...";
+                        PreferencesActivity.getWidgetPreferences(this, appWidgetId).getRateService().getName()+ "...";
                 Toast.makeText(this, toastText, Toast.LENGTH_LONG).show();
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
-                MtGoxWidgetProvider.updateAppWidgetAsync(this, appWidgetManager, appWidgetId);
+                WidgetProvider.updateAppWidgetAsync(this, appWidgetManager, appWidgetId);
                 return true;
             case R.id.switchTimeframe:
                 if(graphTimeframe.equals(GraphTimeframe.OneDay)) {

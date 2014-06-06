@@ -15,18 +15,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package st.brothas.mtgoxwidget;
+package org.openbitcoinwidget;
 
 import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static st.brothas.mtgoxwidget.MtGoxWidgetProvider.LOG_TAG;
+import static org.openbitcoinwidget.WidgetProvider.LOG_TAG;
 
 /**
-  * Util class for the Mt Gox Ticker.
+  * Util class for the Ticker.
   */
-public class MtGoxTickerUtil {
+public class TickerUtil {
 
     // TODO: Change to one method with "String... objects"
     public static String getJSONTickerKeyFromObjects(JSONObject json, String objectNameLevel1, String objectNameLevel2,
