@@ -13,13 +13,13 @@ previous value), red if it has decreased, or yellow if the value hasn't
 changed.
 
 Uses the Apache 2.0 licensed chart library AChartEngine:
-http://www.achartengine.org/
+* http://www.achartengine.org/
 
-Bitcoin is a virtual digital currency, read more here:
-http://www.bitcoin.org/
+Bitcoin is a digital currency, read more here:
+* http://www.bitcoin.org/
 
 The widget page on Android market:
-TBD
+* TBD
 
 
 
@@ -30,10 +30,11 @@ This product includes software developed by Gösta Jonasson.
 Copyright 2010-2011 Gösta Jonasson
 
 It also includes the Apache 2.0 licensed chart library AChartEngine:
-http://www.achartengine.org/
+* http://www.achartengine.org/
 
 And open sourced code from:
-http://meneameandroid.googlecode.com/
+* http://meneameandroid.googlecode.com/
 
-And icon made by freepik.com
+And icon made by:
+* http://freepik.com/
 
