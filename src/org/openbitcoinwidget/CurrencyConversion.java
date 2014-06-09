@@ -24,6 +24,7 @@ public enum CurrencyConversion {
 	LTC_USD(107, "LTC/USD", "$", DigitalCurrency.LITECOIN),
 	LTC_EUR(108, "LTC/EUR", "€", DigitalCurrency.LITECOIN),
 	LTC_CNY(109, "LTC/CNY", "¥", DigitalCurrency.LITECOIN);
+	LTC_PLN(110, "LTC/PLN", "z", DigitalCurrency.LITECOIN);
 
 	public static enum DigitalCurrency {BITCOIN, LITECOIN};
 
